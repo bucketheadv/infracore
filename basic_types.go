@@ -1,4 +1,4 @@
-package core
+package infracore
 
 import (
 	"cmp"
