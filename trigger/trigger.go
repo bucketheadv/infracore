@@ -16,6 +16,7 @@ func NextTriggerTimes(spec string, startTime time.Time, loc *time.Location, n in
 	s, err := c.Parse(spec)
 	if err != nil {
 		logrus.Error(err)
+		return make([]time.Time, 0)
 	}
 	dateTime := timezone.WithZone(startTime, loc)
 	var result []time.Time
