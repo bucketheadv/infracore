@@ -1,7 +1,7 @@
 package trigger
 
 import (
-	"github.com/bucketheadv/infracore/timezone"
+	"github.com/bucketheadv/infra-core/timezone"
 	"github.com/robfig/cron/v3"
 	"github.com/sirupsen/logrus"
 	"time"

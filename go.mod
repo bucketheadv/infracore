@@ -1,4 +1,4 @@
-module github.com/bucketheadv/infracore
+module github.com/bucketheadv/infra-core
 
 go 1.23.4
 

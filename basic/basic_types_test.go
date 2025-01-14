@@ -1,4 +1,4 @@
-package infracore
+package basic
 
 import (
 	"testing"

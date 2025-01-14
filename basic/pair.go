@@ -1,4 +1,4 @@
-package infracore
+package basic
 
 type Pair[T any, R any] struct {
 	Left  T `json:"left"`
