@@ -17,6 +17,19 @@ func TestConvertStringTo(t *testing.T) {
 	ConvertStringTo("123", &intVal)
 	assert.Equal(t, 123, intVal)
 
+	var int32Val int32
+	ConvertStringTo("123", &int32Val)
+	assert.Equal(t, int32(123), int32Val)
+
+	var int64Val int64
+	ConvertStringTo("123", &int64Val)
+	assert.Equal(t, int64(123), int64Val)
+
+	// 测试浮点数转换
+	var floatVal32 float32
+	ConvertStringTo("1.23", &floatVal32)
+	assert.Equal(t, float32(1.23), floatVal32)
+
 	// 测试浮点数转换
 	var floatVal float64
 	ConvertStringTo("1.23", &floatVal)

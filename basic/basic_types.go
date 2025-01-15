@@ -20,7 +20,13 @@ func ConvertStringTo[T cmp.Ordered | bool](v string, t *T) {
 			logrus.Error(err.Error())
 		}
 		val.Elem().SetInt(i)
-	case reflect.Float32, reflect.Float64:
+	case reflect.Float32:
+		f, err := strconv.ParseFloat(v, 32)
+		if err != nil {
+			logrus.Error(err.Error())
+		}
+		val.Elem().SetFloat(f)
+	case reflect.Float64:
 		f, err := strconv.ParseFloat(v, 64)
 		if err != nil {
 			logrus.Error(err.Error())
