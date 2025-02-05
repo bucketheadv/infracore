@@ -8,9 +8,10 @@ import (
 	"strconv"
 )
 
-func ConvertStringTo[T cmp.Ordered | bool](v string, t *T) error {
-	typ := reflect.TypeOf(t)
-	val := reflect.ValueOf(t)
+func StringTo[T cmp.Ordered | bool](v string) (T, error) {
+	var t T
+	typ := reflect.TypeOf(&t)
+	val := reflect.ValueOf(&t)
 	eleType := typ.Elem().Kind()
 	switch eleType {
 	case reflect.String:
@@ -18,39 +19,39 @@ func ConvertStringTo[T cmp.Ordered | bool](v string, t *T) error {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		i, err := strconv.ParseInt(v, 10, 64)
 		if err != nil {
-			return err
+			return t, err
 		}
 		val.Elem().SetInt(i)
 	case reflect.Float32:
 		f, err := strconv.ParseFloat(v, 32)
 		if err != nil {
-			return err
+			return t, err
 		}
 		val.Elem().SetFloat(f)
 	case reflect.Float64:
 		f, err := strconv.ParseFloat(v, 64)
 		if err != nil {
-			return err
+			return t, err
 		}
 		val.Elem().SetFloat(f)
 	case reflect.Bool:
 		b, err := strconv.ParseBool(v)
 		if err != nil {
-			return err
+			return t, err
 		}
 		val.Elem().SetBool(b)
 	default:
-		return errors.New(fmt.Sprintf("不支持的数据类型: %s\n", eleType))
+		return t, errors.New(fmt.Sprintf("不支持的数据类型: %s\n", eleType))
 	}
-	return nil
+	return t, nil
 }
 
-func ConvertArrayTo[T cmp.Ordered | bool](v []string) ([]T, error) {
+func ArrayElemTo[T cmp.Ordered | bool](v []string) ([]T, error) {
 	result := make([]T, 0)
 	for _, v := range v {
-		var tmp T
-		if err := ConvertStringTo(v, &tmp); err != nil {
-			return nil, err
+		tmp, err := StringTo[T](v)
+		if err != nil {
+			return result, err
 		}
 		result = append(result, tmp)
 	}
