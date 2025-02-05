@@ -41,6 +41,10 @@ var (
 		Level:   zapcore.InfoLevel,
 	}
 
+	debugLevelEnabler = zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
+		return lvl == zapcore.DebugLevel
+	})
+
 	infoLevelEnabler = zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
 		return lvl == zapcore.InfoLevel
 	})
@@ -105,9 +109,10 @@ type RotateCfg struct {
 
 func (l *Logger) Init() {
 	zapLogger := zap.New(zapcore.NewTee(
+		zapcore.NewCore(l.getEncoder(l.encoder.LevelKey), l.getLogWriter(l.infoLogPath), debugLevelEnabler),
 		zapcore.NewCore(l.getEncoder(l.encoder.LevelKey), l.getLogWriter(l.infoLogPath), infoLevelEnabler),
 		zapcore.NewCore(l.getEncoder(l.encoder.LevelKey), l.getLogWriter(l.errorLogPath), errorLevelEnabler),
-		zapcore.NewCore(l.getEncoder(""), l.getLogWriter(l.accessLogPath), accessLevelEnabler),
+		zapcore.NewCore(l.getEncoder(l.encoder.LevelKey), l.getLogWriter(l.accessLogPath), accessLevelEnabler),
 	), zap.AddCaller(), zap.AddCallerSkip(1), zap.AddStacktrace(errorLevelEnabler))
 	l.sugaredLogger = zapLogger.Sugar()
 	l.logger = zapLogger
