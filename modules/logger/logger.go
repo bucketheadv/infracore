@@ -1,4 +1,4 @@
-// Copyright 2019 GoAdmin Core Team. All rights reserved.
+// Copyright 2019 InfraCore Core Team. All rights reserved.
 // Use of this source code is governed by a Apache-2.0 style
 // license that can be found in the LICENSE file.
 
@@ -240,7 +240,7 @@ func OpenSQLLog() {
 func Debug(info ...interface{}) {
 	if !logger.infoLogOff {
 		if logger.Level <= zapcore.DebugLevel {
-			logger.sugaredLogger.Info(info...)
+			logger.sugaredLogger.Debug(info...)
 		}
 	}
 }
@@ -248,7 +248,7 @@ func Debug(info ...interface{}) {
 // Debugf print the debug message.
 func Debugf(template string, args ...interface{}) {
 	if !logger.infoLogOff && logger.Level <= zapcore.DebugLevel {
-		logger.sugaredLogger.Infof(template, args...)
+		logger.sugaredLogger.Debugf(template, args...)
 	}
 }
 
@@ -362,14 +362,14 @@ func Access(ctx *context.Context) {
 	if !logger.accessLogOff && logger.Level <= zapcore.InfoLevel {
 		if logger.accessAssetsLogOff {
 			if filepath.Ext(ctx.Path()) == "" {
-				logger.logger.Info("[GoAdmin] access log",
+				logger.logger.Info("[InfraCore] access log",
 					zap.String("traceID", trace.GetTraceID(ctx)),
 					zap.String("statuscode", strconv.Itoa(ctx.Response.StatusCode)),
 					zap.String("method", string(ctx.Method())),
 					zap.String("path", ctx.Path()))
 			}
 		} else {
-			logger.logger.Info("[GoAdmin] access log",
+			logger.logger.Info("[InfraCore] access log",
 				zap.String("traceID", trace.GetTraceID(ctx)),
 				zap.String("statuscode", strconv.Itoa(ctx.Response.StatusCode)),
 				zap.String("method", string(ctx.Method())),
@@ -382,7 +382,7 @@ func Access(ctx *context.Context) {
 func LogSQL(statement string, args []interface{}) {
 	if !logger.infoLogOff && logger.sqlLogOpen && statement != "" {
 		if logger.Level <= zapcore.InfoLevel {
-			logger.sugaredLogger.With("statement", statement, "args", args).Info("[GoAdmin]")
+			logger.sugaredLogger.With("statement", statement, "args", args).Info("[InfraCore]")
 		}
 	}
 }
