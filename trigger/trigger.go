@@ -1,9 +1,9 @@
 package trigger
 
 import (
+	"github.com/bucketheadv/infra-core/modules/logger"
 	"github.com/bucketheadv/infra-core/timezone"
 	"github.com/robfig/cron/v3"
-	"github.com/sirupsen/logrus"
 	"time"
 )
 
@@ -15,7 +15,7 @@ func NextTriggerTimes(spec string, startTime time.Time, loc *time.Location, n in
 	c := cron.NewParser(cron.Second | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)
 	s, err := c.Parse(spec)
 	if err != nil {
-		logrus.Error(err)
+		logger.Error(err)
 		return make([]time.Time, 0)
 	}
 	dateTime := timezone.WithZone(startTime, loc)
