@@ -40,3 +40,33 @@ func TestConvertStringTo(t *testing.T) {
 	_ = ConvertStringTo("true", &boolVal)
 	assert.Equal(t, true, boolVal)
 }
+
+func TestConvertArrayTo(t *testing.T) {
+	// 测试数组转换
+	arr, _ := ConvertArrayTo[int]([]string{"1", "2", "3"})
+	assert.Equal(t, []int{1, 2, 3}, arr)
+
+	arr2, _ := ConvertArrayTo[int8]([]string{"1", "2", "3"})
+	assert.Equal(t, []int8{1, 2, 3}, arr2)
+
+	arr3, _ := ConvertArrayTo[int16]([]string{"1", "2", "3"})
+	assert.Equal(t, []int16{1, 2, 3}, arr3)
+
+	arr4, _ := ConvertArrayTo[int32]([]string{"1", "2", "3"})
+	assert.Equal(t, []int32{1, 2, 3}, arr4)
+
+	arr5, _ := ConvertArrayTo[int64]([]string{"1", "2", "3"})
+	assert.Equal(t, []int64{1, 2, 3}, arr5)
+
+	arr6, _ := ConvertArrayTo[string]([]string{"1", "2", "3"})
+	assert.Equal(t, []string{"1", "2", "3"}, arr6)
+
+	arr7, _ := ConvertArrayTo[float32]([]string{"1", "2", "3"})
+	assert.Equal(t, []float32{1, 2, 3}, arr7)
+
+	arr8, _ := ConvertArrayTo[float64]([]string{"1", "2", "3"})
+	assert.Equal(t, []float64{1, 2, 3}, arr8)
+
+	arr9, _ := ConvertArrayTo[bool]([]string{"true", "false"})
+	assert.Equal(t, []bool{true, false}, arr9)
+}

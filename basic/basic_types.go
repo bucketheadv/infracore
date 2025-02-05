@@ -44,3 +44,15 @@ func ConvertStringTo[T cmp.Ordered | bool](v string, t *T) error {
 	}
 	return nil
 }
+
+func ConvertArrayTo[T cmp.Ordered | bool](v []string) ([]T, error) {
+	result := make([]T, 0)
+	for _, v := range v {
+		var tmp T
+		if err := ConvertStringTo(v, &tmp); err != nil {
+			return nil, err
+		}
+		result = append(result, tmp)
+	}
+	return result, nil
+}

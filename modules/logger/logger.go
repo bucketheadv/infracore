@@ -1,7 +1,3 @@
-// Copyright 2019 InfraCore Core Team. All rights reserved.
-// Use of this source code is governed by a Apache-2.0 style
-// license that can be found in the LICENSE file.
-
 package logger
 
 import (
@@ -272,7 +268,7 @@ func logCtx(ctx *context.Context, logFunc logFunc, format string, args ...interf
 	logFunc(fmt.Sprintf(format, args...), zap.String("traceID", trace.GetTraceID(ctx)))
 }
 
-// Info print the info message.
+// Infof print the info message.
 func Infof(template string, args ...interface{}) {
 	if !logger.infoLogOff && logger.Level <= zapcore.InfoLevel {
 		logger.sugaredLogger.Infof(template, args...)
@@ -342,7 +338,7 @@ func Fatalf(template string, args ...interface{}) {
 	}
 }
 
-// Fatal print the panic message.
+// Panic print the panic message.
 func Panic(info ...interface{}) {
 	logger.sugaredLogger.Panic(info...)
 }
