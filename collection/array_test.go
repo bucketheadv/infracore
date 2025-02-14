@@ -92,7 +92,6 @@ func TestArrayToMap(t *testing.T) {
 	// 测试用例 1：正常情况
 	arr1 := []int{1, 2, 3, 4, 5}
 	keyFunc1 := func(t int) int { return t }
-	conflictFunc1 := func(t1 int, t2 int) int { return t1 + t2 }
 	expectedMap1 := map[int]int{
 		1: 1,
 		2: 2,
@@ -100,26 +99,24 @@ func TestArrayToMap(t *testing.T) {
 		4: 4,
 		5: 5,
 	}
-	resultMap1 := ArrayToMap(arr1, keyFunc1, conflictFunc1)
+	resultMap1 := ArrayToMap(arr1, false, keyFunc1)
 	assert.Equal(t, expectedMap1, resultMap1)
 
 	// 测试用例 2：有冲突的情况
 	arr2 := []int{1, 2, 2, 3, 3, 3}
 	keyFunc2 := func(t int) int { return t }
-	conflictFunc2 := func(t1 int, t2 int) int { return t1 * t2 }
 	expectedMap2 := map[int]int{
 		1: 1,
-		2: 4,
-		3: 27,
+		2: 2,
+		3: 3,
 	}
-	resultMap2 := ArrayToMap(arr2, keyFunc2, conflictFunc2)
+	resultMap2 := ArrayToMap(arr2, true, keyFunc2)
 	assert.Equal(t, expectedMap2, resultMap2)
 
 	// 测试用例 3：空数组
 	arr3 := []int{}
 	keyFunc3 := func(t int) int { return t }
-	conflictFunc3 := func(t1 int, t2 int) int { return t1 + t2 }
 	expectedMap3 := map[int]int{}
-	resultMap3 := ArrayToMap(arr3, keyFunc3, conflictFunc3)
+	resultMap3 := ArrayToMap(arr3, false, keyFunc3)
 	assert.Equal(t, expectedMap3, resultMap3)
 }

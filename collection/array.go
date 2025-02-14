@@ -33,15 +33,13 @@ func GroupBy[T any, R cmp.Ordered](arr []T, function func(T) R) map[R][]T {
 // ArrayToMap 将数组转换为 Map
 // arr 数组
 // keyFunc 取数组中哪个字段作为 map 的 key
-// conflictFunc 如果有相同的 key, 取哪个值作为 key 对应的值
-func ArrayToMap[T any, R cmp.Ordered](arr []T, keyFunc func(T) R, conflictFunc func(T, T) T) map[R]T {
+// coverExists 如果有相同的 key 元素, 是否用后面的覆盖前面的
+func ArrayToMap[T any, R cmp.Ordered](arr []T, coverExists bool, keyFunc func(T) R) map[R]T {
 	result := map[R]T{}
 	for _, ele := range arr {
 		k := keyFunc(ele)
-		if _, ok := result[k]; ok {
-			// 如果已经存在了, 由外部决定保存哪一个
-			result[k] = conflictFunc(result[k], ele)
-		} else {
+		_, ok := result[k]
+		if !ok || coverExists {
 			result[k] = ele
 		}
 	}
